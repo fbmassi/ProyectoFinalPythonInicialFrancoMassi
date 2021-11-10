@@ -2,7 +2,8 @@ def validar_ingreso(ingreso):
 
     """
     Valida si el usuario ingreso los datos correctamente. 
-    devuelve una variable de tipo Booleano.
+    Devuelve una variable de tipo Booleano dependiendo de 
+    si el usuario ingreso 'S' o 'N'.
     """
 
     validacion = False 
@@ -16,12 +17,15 @@ def validar_ingreso(ingreso):
             ingreso = input("INGRESO INCORRECTO. POR FAVOR INGRESE 'S' O 'N': ").upper()
     
     return ingreso == "S"
+
+
     
 def validar_numero(ingreso):
 
     """
     Valida si el usuario ingreso los datos correctamente. 
-    devuelve una variable de tipo Booleano.
+    Devuelve una la misma variable que el usuario ingreso,
+    siempre y cuando sea de tipo numerica.
     """
 
     validacion = False 
@@ -34,7 +38,7 @@ def validar_numero(ingreso):
         else:
             ingreso = input("INGRESO INCORRECTO. POR FAVOR INGRESE UNA VARIABLE NUMERICA: ").upper()
     
-    return ingreso.isnumeric()
+    return int(ingreso)
 
 def desea_seguir():
     

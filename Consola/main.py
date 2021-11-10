@@ -24,10 +24,4 @@ def main():
     
 main()
 
-"""
-CABA = open('propiedades_CABA.csv')
-print(contar_propiedades(CABA))
-linea = CABA.readline()
-print(linea)
-CABA.close()
-"""
+
