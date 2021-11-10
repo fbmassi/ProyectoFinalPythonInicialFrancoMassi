@@ -21,6 +21,8 @@ def contar_propiedades(propiedades):
 
     propiedad = leer(propiedades)
 
+    propiedad = leer(propiedades)
+
     contador = 0
 
     while propiedad[NUMERO]:
@@ -64,20 +66,18 @@ def filtros_a_aplicar(filtros_deseados):
 
 
 def ambientes(propiedad):
-
-
+    print('NO LISTO')
 
 def superficie(propiedad):
-
-
+    
     min_superficie_deseada = validar_numero(input("Ingrese la minima superficie que desea para su propiedad: "))
 
     max_superficie_deseada = validar_numero(input("Ingrese la maxima superficie que desea para su propiedad: "))
 
-    
+
     while min_superficie_deseada > max_superficie_deseada:
 
-         print("LA SUPERFICIE MINIMA DEBE SER IGUAL O MAYOR A LA SUPERFICIE MAXIMA DESEADA")
+         print("LA SUPERFICIE MINIMA DEBE SER IGUAL O MAYOR A LA SUPERFICIE MAXIMA DESEADA.")
 
          min_superficie_deseada = validar_numero(input("Ingrese la minima superficie que desea para su propiedad: "))
          
@@ -91,11 +91,16 @@ def superficie(propiedad):
 
     return propiedad
 
+
+
 def divisa(propiedad):
+    print('NO LISTO')
 
 def precio(propiedad):
+    print('NO LISTO')
 
 def tipo_propiedad(propiedad):
+    print('NO LISTO')
 
 
 
