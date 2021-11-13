@@ -40,27 +40,22 @@ def validar_numero(ingreso):
     
     return int(ingreso)
 
-def desea_seguir():
-    
-    """
-    Le pregunta al usuario si desea seguir realizando busquedas de alquileres. 
-    La funcion devuelve una cadena no vacia si el usuario ingreso 'S' 
-    y una vacia si ingreso 'n'.
-    """
 
-    seguir = input("Desea seguir buscando? (Ingrese S/N): ").upper()
+def validar_tipo_propiedad(ingreso):
 
-    return "Seguir" if validar_ingreso(seguir) else ""
+    validacion = False
 
+    while not validacion:
 
+        if ingreso == 'Casa' or ingreso == 'Departamento':
+            
+            validacion = True 
+        
+        else:
+            
+            ingreso = input("INGRESO INCORRECTO. POR FAVOR INGRESE 'CASA' O 'DEPARTAMENTO' SIN PUNTOS NI ESPACIOS: ").capitalize()
 
-def ingreso():
-
- #  Solicita el ingreso de un valor y devuelve el mismo.
-
-    ingreso = input("Ingrese: ")
-
-    return ingreso 
+    return ingreso
 
 def leer(archivo):
 

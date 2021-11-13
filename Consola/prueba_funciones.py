@@ -1,5 +1,4 @@
 from lectura import NUMERO, AMBIENTES, SUPERFICIE, MONEDA, PRECIO, TIPO_DE_PROPIEDAD
-from lectura import ambientes, divisa, precio, tipo_propiedad, contar_propiedades
 from other_functions import validar_numero
 
 #PRUEBA NUMERO 1
@@ -84,3 +83,11 @@ prueba_de_funciones([3,2021_10_25,-34.596046,-58.392166,'https://departamento.me
 """
 
 #PRUEBA NUMERO 3
+"""
+dict_1 = {1:3,2:4,5:6}
+fil = [x for x in dict_1]
+if fil == [1,2,5]:
+    print('si')
+"""
+
+#PRUEBA NUMERO 4
