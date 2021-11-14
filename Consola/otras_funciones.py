@@ -1,11 +1,10 @@
 def validar_ingreso(ingreso):
-
     """
     Valida si el usuario ingreso los datos correctamente. 
     Devuelve una variable de tipo Booleano dependiendo de 
     si el usuario ingreso 'S' o 'N'.
     """
-
+    
     validacion = False 
 
     while not validacion:
@@ -21,7 +20,6 @@ def validar_ingreso(ingreso):
 
     
 def validar_numero(ingreso):
-
     """
     Valida si el usuario ingreso los datos correctamente. 
     Devuelve una la misma variable que el usuario ingreso,
@@ -41,7 +39,12 @@ def validar_numero(ingreso):
     return int(ingreso)
 
 
-def validar_tipo_propiedad(ingreso):
+def validar_tipo_propiedad(ingreso): 
+    """
+    Valida si el usuario ingreso los datos correctamente. 
+    Devuelve una la misma variable que el usuario ingreso,
+    siempre y cuando sea la palabra 'Casa' o 'Departamento'.
+    """
 
     validacion = False
 
@@ -58,7 +61,6 @@ def validar_tipo_propiedad(ingreso):
     return ingreso
 
 def leer(archivo):
-
     """
     Esta funcion recibe como parametro un archivo CSV y
     lee una linea del archivo cada vez que se ejecuta.

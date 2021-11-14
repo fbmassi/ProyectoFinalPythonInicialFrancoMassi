@@ -11,7 +11,6 @@ MINIMO, MAXIMO = 0,1
 
 #FUNCIONES
 def contar_propiedades(propiedades):
-
     """
     Esta funcion toma como parametro el archivo de las 
     propiedades en alquiler. Lo recorre contando la 
@@ -38,8 +37,16 @@ def contar_propiedades(propiedades):
     return contador
 
 
-
 def precio():
+    """
+    Esta funcion solicita al usuario que
+    ingrese en que divisa en la que le interesa
+    pagar. Luego le pide al usuario que ingrese
+    un monto minimo y uno maximo. Devuelve una
+    lista de listas con la informacion acerca
+    de que divisa escogio y los montos minimos
+    y maximos de cada una. 
+    """
 
     desea_pesos = validar_ingreso(input("Desea que se muestren propiedades tasadas en pesos? (Ingrese S/N): ").upper())
 
@@ -91,6 +98,13 @@ def precio():
 
 
 def ambientes():
+    """
+    Esta funcion solicita al usuario que
+    ingrese una cantidad minima y maxima
+    de ambientes que desea para su inmueble.
+    Devuelve una lista con la informacion
+    ingresada por el usuario.
+    """
 
     min_ambientes_deseados = validar_numero(input("Ingrese la minima cantidad de ambientes que desea para su propiedad: "))
 
@@ -110,18 +124,26 @@ def ambientes():
 
 
 def superficie():
+    """
+    Esta funcion solicita al usuario que
+    ingrese una cantidad minima y maxima
+    de superficie (en metros cuadrados)
+    que desea para su inmueble.
+    Devuelve una lista con la informacion
+    ingresada por el usuario.
+    """
 
-    min_superficie_deseada = validar_numero(input("Ingrese la minima superficie que desea para su propiedad: "))
+    min_superficie_deseada = validar_numero(input("Ingrese la minima superficie (en metros cuadrados) que desea para su propiedad: "))
 
-    max_superficie_deseada = validar_numero(input("Ingrese la maxima superficie que desea para su propiedad: "))
+    max_superficie_deseada = validar_numero(input("Ingrese la maxima superficie (en metros cuadrados) que desea para su propiedad: "))
 
     while min_superficie_deseada > max_superficie_deseada:
 
          print("LA SUPERFICIE MINIMA DESEADA DEBE SER IGUAL O MENOR A LA MAXIMA.")
 
-         min_superficie_deseada = validar_numero(input("Ingrese la minima superficie que desea para su propiedad: "))
+         min_superficie_deseada = validar_numero(input("Ingrese la minima superficie (en metros cuadrados) que desea para su propiedad: "))
          
-         max_superficie_deseada = validar_numero(input("Ingrese la maxima superficie que desea para su propiedad: "))
+         max_superficie_deseada = validar_numero(input("Ingrese la maxima superficie (en metros cuadrados) que desea para su propiedad: "))
     
     cant_superficie = [min_superficie_deseada, max_superficie_deseada]
 
@@ -129,6 +151,17 @@ def superficie():
 
 
 def filtros_a_aplicar(filtros_deseados):
+    """
+    Esta funcion recibe como parametro
+    un diccionario vacio. Le solicita
+    al usuario el ingreso de los filtros
+    que desea aplicar en su busqueda.
+    A partir de ello graba el diccionario
+    con la informacion requerida para filtrar
+    la informacion.
+    Devuelve el diccionario con la informacion
+    requerida.
+    """
     
     desea_precio =  validar_ingreso(input("Desea filtrar la busqueda por el precio de la propiedad? (Ingrese S/N): ").upper())
 
@@ -160,8 +193,22 @@ def filtros_a_aplicar(filtros_deseados):
 
 
 def filtrar_precio(propiedad, filtros_deseados):
+    """
+    Esta funcion recibe como parametros
+    una lista con la informacion sobre
+    una propiedad que se esta analizando
+    y el diccionario con los filtros que
+    se desea aplicar en la busqueda.
+    Analiza si el precio grabado en la
+    propiedad cumple con los requisitos
+    establecidos por el usuario. Si ese
+    es el caso, graba que cumple los
+    requisitos, sino es asi devuelve la
+    lista tal como estaba cuando la recibio.
+    """
     
     try:
+        
         if (filtros_deseados[PRECIO][PESOS][DESEA_DIVISA]) and (propiedad[MONEDA] == "ARS") and (float(propiedad[PRECIO]) >= filtros_deseados[PRECIO][PESOS][MINIMO_DIVISA]) and (float(propiedad[PRECIO]) <= filtros_deseados[PRECIO][PESOS][MAXIMO_DIVISA]):
             
             propiedad += [PRECIO]
@@ -178,6 +225,20 @@ def filtrar_precio(propiedad, filtros_deseados):
 
 
 def filtrar_ambientes(propiedad, filtros_deseados):
+    """
+    Esta funcion recibe como parametros
+    una lista con la informacion sobre
+    una propiedad que se esta analizando
+    y el diccionario con los filtros que
+    se desea aplicar en la busqueda.
+    Analiza si la cantidad de ambientes
+    grabada en la propiedad cumple con
+    los requisitos establecidos por el
+    usuario. Si ese es el caso, graba que
+    cumple los requisitos, sino es asi
+    devuelve la lista tal como estaba
+    cuando la recibio.
+    """
     
     try:
         
@@ -193,8 +254,23 @@ def filtrar_ambientes(propiedad, filtros_deseados):
 
 
 def filtrar_superficie(propiedad, filtros_deseados):
-
+    """
+    Esta funcion recibe como parametros
+    una lista con la informacion sobre
+    una propiedad que se esta analizando
+    y el diccionario con los filtros que
+    se desea aplicar en la busqueda.
+    Analiza si la cantidad de superficie
+    grabada en la propiedad cumple con
+    los requisitos establecidos por el
+    usuario. Si ese es el caso, graba que
+    cumple los requisitos, sino es asi
+    devuelve la lista tal como estaba
+    cuando la recibio.
+    """
+    
     try:
+        
         if (float(propiedad[SUPERFICIE]) >= filtros_deseados[SUPERFICIE][MINIMO]) and (float(propiedad[SUPERFICIE]) <= filtros_deseados[SUPERFICIE][MAXIMO]):
             
             propiedad += [SUPERFICIE]
@@ -206,8 +282,22 @@ def filtrar_superficie(propiedad, filtros_deseados):
 
 
 def filtrar_tipo_prop(propiedad, filtros_deseados):
+    """
+    Esta funcion recibe como parametros
+    una lista con la informacion sobre
+    una propiedad que se esta analizando
+    y el diccionario con los filtros que
+    se desea aplicar en la busqueda.
+    Analiza si el tipo de propiedad
+    cumple con los requisitos establecidos
+    por el usuario. Si ese es el caso,
+    graba que cumple los requisitos,
+    sino es asi devuelve la lista tal
+    como estaba cuando la recibio.
+    """
     
     try:
+        
         if propiedad[TIPO_DE_PROPIEDAD] == filtros_deseados[TIPO_DE_PROPIEDAD]:
             
             propiedad += [TIPO_DE_PROPIEDAD]
@@ -220,6 +310,18 @@ def filtrar_tipo_prop(propiedad, filtros_deseados):
 
 
 def aplicar_filtros(propiedades, busqueda, filtros_deseados):
+    """
+    Esta funcion recibe como parametros
+    los archivos abiertos y el diccionario
+    con la informacion requerida para filtrar
+    la informacion. Analiza que filtros quiere
+    aplicar el usuario al archivo que se lee y,
+    si cumple con los requerimientos, graba la
+    informacion en el archivo en modo de
+    escritura. Si la propiedad analizada
+    no cumple con los requisitos, simplemente
+    se descarta y se lee la siguiente.
+    """
 
     propiedad = leer(propiedades)
 
@@ -261,6 +363,15 @@ def aplicar_filtros(propiedades, busqueda, filtros_deseados):
 
 
 def analizar_datos(propiedades, busqueda):
+    """
+    Recibe como parametros el archivo
+    a leer y el archivo a escribir.
+    Dirige como se graba la informacion
+    en el segundo archivo dependiendo de
+    si el usuario desea aplicar filtros
+    de busqueda o desea ver todas las
+    propiedades disponibles.
+    """
 
     print("GRACIAS POR ELEGIRNOS.")
 
@@ -292,6 +403,16 @@ def analizar_datos(propiedades, busqueda):
 
 
 def mostrar_resultados(resultados_de_busqueda):
+    """
+    Recibe como parametro el archivo con
+    los resultados de busqueda del usuario.
+    La funcion administra el como se
+    imprimen en pantalla los datos,
+    dependiendo de la cantidad que se filtro
+    y si el usuario desea o no que los resultados
+    se muestren en orden ascendente o descendente
+    respecto al precio de los mismos.
+    """
     
     cant_resultados = contar_propiedades(resultados_de_busqueda)
 
@@ -317,8 +438,6 @@ def mostrar_resultados(resultados_de_busqueda):
             
             lista_ordenada = sorted(lista_a_ordenar, key = lambda inmueble:inmueble[PRECIO])
             
-            #print(lista_ordenada)
-            
             for propiedad in lista_ordenada:
 
                print("\n" + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "\n" + "Ubicacion ---->  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: "  + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL] + "\n" )
@@ -327,12 +446,9 @@ def mostrar_resultados(resultados_de_busqueda):
             
             lista_ordenada = sorted(lista_a_ordenar, reverse = True, key = lambda inmueble:inmueble[PRECIO])
             
-            #print(lista_ordenada)
-            
             for propiedad in lista_ordenada:
 
                print("\n" + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "\n" + "Ubicacion ---->  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: "  + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL] + "\n")
-    
     
     elif cant_resultados == 0:
         
@@ -345,23 +461,12 @@ def mostrar_resultados(resultados_de_busqueda):
         print("\n" + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "Ubicacion ---->  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: " + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL])
             
     else:
+        
+        propiedad = leer(resultados_de_busqueda)
 
         while propiedad[NUMERO]:
             
-            propiedad = leer(resultados_de_busqueda)
-            
             print("\n" + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "Ubicacion ---->  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: "  + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL])
             
+            propiedad = leer(resultados_de_busqueda)
             
-
-
-
-
-
-
-#lista = [x.upper() for x in ["numero", "fecha", "latitud" , "longitud", "url", "titulo", "tipo de propiedad", "precio" ,"moneda" , "SUPERFICIE", "ambientes"]]
-#print(lista)
-
-#if propiedad[SUPERFICIE] >= min_superficie_deseada and propiedad[SUPERFICIE] <= max_superficie_deseada:
-            
-#busqueda.write(propiedad[TITULO] + "," + propiedad[TIPO_DE_PROPIEDAD] + "," + propiedad[MONEDA] + "," + propiedad[PRECIO] + "," + propiedad[AMBIENTES] + "," + propiedad[SUPERFICIE] + "," + propiedad[URL] + "," + propiedad[LATITUD] +"," + propiedad[LONGITUD] +"\n")
