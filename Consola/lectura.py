@@ -1,5 +1,5 @@
 #IMPORTACIONES
-from other_functions import validar_ingreso, validar_numero, leer, validar_tipo_propiedad
+from otras_funciones import validar_ingreso, validar_numero, leer, validar_tipo_propiedad
 
 #CONSTANTES
 NUMERO, FECHA, LATITUD, LONGITUD, URL, TITULO, TIPO_DE_PROPIEDAD, PRECIO, MONEDA, SUPERFICIE, AMBIENTES = 0,1,2,3,4,5,6,7,8,9,10
@@ -22,15 +22,15 @@ def contar_propiedades(propiedades):
     """
 
     propiedad = leer(propiedades)
-
+    
     propiedad = leer(propiedades)
-
-    contador = 1
+    
+    contador = 0
 
     while propiedad[NUMERO]:
-
+            
         contador += 1
-
+            
         propiedad = leer(propiedades)
 
     propiedades.seek(PRINCIPIO)
@@ -269,6 +269,8 @@ def analizar_datos(propiedades, busqueda):
     desea_filtros = validar_ingreso(input("Desea realizar filtros en su busqueda? (Ingrese S/N): ").upper())
 
     filtros_deseados = {}
+    
+    busqueda.write("numero" + "," + "fecha" + "," + "latitud" + "," + "longitud" + "," + "url" + "," + "titulo" + "," + "tipo de propiedad" + "," + "precio" + "," + "moneda" + "," + "superficie" + "," + "ambientes" + "\n")
 
     if not desea_filtros:
 
@@ -290,16 +292,18 @@ def analizar_datos(propiedades, busqueda):
 
 
 def mostrar_resultados(resultados_de_busqueda):
+    
+    cant_resultados = contar_propiedades(resultados_de_busqueda)
 
-    print("HAY", contar_propiedades(resultados_de_busqueda), " PROPIEDADES AJUSTADAS A SUS PREFERENCIAS.")
+    print("\n\nHAY", cant_resultados, " PROPIEDADES AJUSTADAS A SUS PREFERENCIAS.")
 
     propiedad = leer(resultados_de_busqueda)
 
-    desea_ordenar_precio = validar_ingreso(input("Desea que los resultados se muestren ordenados a partir del precio? (Ingrese S/N): ").upper())
-
-    if desea_ordenar_precio:
+    if (cant_resultados > 1) and validar_ingreso(input("Desea que los resultados se muestren ordenados a partir del precio? (Ingrese S/N): ").upper()) :
 
         lista_a_ordenar = []
+        
+        propiedad = leer(resultados_de_busqueda)
 
         while propiedad[NUMERO]:
             
@@ -329,13 +333,25 @@ def mostrar_resultados(resultados_de_busqueda):
 
                print("\n" + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "\n" + "Ubicacion ---->  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: "  + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL] + "\n")
     
+    
+    elif cant_resultados == 0:
+        
+        print("NO SE HAN ENCONTRADO RESULTADOS PARA TU BUSQUEDA.")
+        
+    elif cant_resultados == 1:
+        
+        propiedad = leer(resultados_de_busqueda)
+            
+        print("\n" + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "Ubicacion ---->  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: " + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL])
+            
     else:
 
         while propiedad[NUMERO]:
             
+            propiedad = leer(resultados_de_busqueda)
+            
             print("\n" + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "Ubicacion ---->  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: "  + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL])
             
-            propiedad = leer(resultados_de_busqueda)
             
 
 
