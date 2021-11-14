@@ -1,2 +1,2 @@
 # Buscador de Alquileres.
-(/imagenes/MercadoLibre.jpg)
+(Imagenes/MercadoLibre.jpg)
