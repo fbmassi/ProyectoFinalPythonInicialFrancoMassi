@@ -1,4 +1,4 @@
 # 🏢 Buscador de Alquileres en CABA 🏡
-![](Imagenes/CABA_002.jpg)
+![](Imagenes/CABA-002.jpg)
 
 ![](Imagenes/MercadoLibre.jpg)
