@@ -25,7 +25,7 @@ def contar_propiedades(propiedades):
 
     propiedad = leer(propiedades)
 
-    contador = 0
+    contador = 1
 
     while propiedad[NUMERO]:
 
@@ -41,11 +41,11 @@ def contar_propiedades(propiedades):
 
 def precio():
 
-    desea_pesos = validar_ingreso(input("Desea que se muestren propiedades tasadas en pesos? (Ingrese S/N)").upper())
+    desea_pesos = validar_ingreso(input("Desea que se muestren propiedades tasadas en pesos? (Ingrese S/N): ").upper())
 
     pesos = [desea_pesos, 0, 0]
         
-    desea_dolares = validar_ingreso(input("Desea que se muestren propiedades tasadas en dolares? (Ingrese S/N)").upper())
+    desea_dolares = validar_ingreso(input("Desea que se muestren propiedades tasadas en dolares? (Ingrese S/N): ").upper())
 
     dolares = [desea_dolares, 0, 0]
     
@@ -152,49 +152,69 @@ def filtros_a_aplicar(filtros_deseados):
 
     if desea_t_propiedad:
 
-        propiedad_deseada = validar_tipo_propiedad(input("Ingrese el tipo de propiedad que se encuentra buscando: (Ingrese 'Casa' o 'Departamento' sin puntos ni espacios)").capitalize())
+        propiedad_deseada = validar_tipo_propiedad(input("Ingrese el tipo de propiedad que se encuentra buscando: (Ingrese 'Casa' o 'Departamento' sin puntos ni espacios): ").capitalize())
 
         filtros_deseados[TIPO_DE_PROPIEDAD] = propiedad_deseada
 
     return filtros_deseados
 
 
-def filtrar_precio(propiedad, filtros_deseados): 
-
-    if (filtros_deseados[PRECIO][PESOS][DESEA_DIVISA]) and (propiedad[MONEDA] == "ARS") and (propiedad[PRECIO] >= filtros_deseados[PRECIO][PESOS][MINIMO_DIVISA]) and (propiedad[PRECIO] <= filtros_deseados[PRECIO][PESOS][MAXIMO_DIVISA]):
-
-        propiedad += [PRECIO]
-
-    elif filtros_deseados[PRECIO][DOLARES][DESEA_DIVISA] and propiedad[MONEDA] == "USD" and (propiedad[PRECIO] >= filtros_deseados[PRECIO][DOLARES][MINIMO_DIVISA]) and (propiedad[PRECIO] <= filtros_deseados[PRECIO][DOLARES][MAXIMO_DIVISA]):
-
-        propiedad += [PRECIO]
+def filtrar_precio(propiedad, filtros_deseados):
+    
+    try:
+        if (filtros_deseados[PRECIO][PESOS][DESEA_DIVISA]) and (propiedad[MONEDA] == "ARS") and (float(propiedad[PRECIO]) >= filtros_deseados[PRECIO][PESOS][MINIMO_DIVISA]) and (float(propiedad[PRECIO]) <= filtros_deseados[PRECIO][PESOS][MAXIMO_DIVISA]):
+            
+            propiedad += [PRECIO]
+            
+        elif filtros_deseados[PRECIO][DOLARES][DESEA_DIVISA] and propiedad[MONEDA] == "USD" and (float(propiedad[PRECIO]) >= filtros_deseados[PRECIO][DOLARES][MINIMO_DIVISA]) and (float(propiedad[PRECIO]) <= filtros_deseados[PRECIO][DOLARES][MAXIMO_DIVISA]):
+            
+            propiedad += [PRECIO]
+            
+    except:
+        
+        propiedad = propiedad
 
     return propiedad
 
 
 def filtrar_ambientes(propiedad, filtros_deseados):
-
-    if (propiedad[AMBIENTES] >= filtros_deseados[AMBIENTES][MINIMO]) and (propiedad[AMBIENTES] <= filtros_deseados[AMBIENTES][MAXIMO]):
+    
+    try:
         
-        propiedad += [AMBIENTES]
+        if (float(propiedad[AMBIENTES]) >= filtros_deseados[AMBIENTES][MINIMO]) and (float(propiedad[AMBIENTES]) <= filtros_deseados[AMBIENTES][MAXIMO]):
+            
+            propiedad += [AMBIENTES]
+            
+    except:
+        
+        propiedad = propiedad
 
     return propiedad
 
 
 def filtrar_superficie(propiedad, filtros_deseados):
 
-    if (propiedad[SUPERFICIE] >= filtros_deseados[SUPERFICIE][MINIMO]) and (propiedad[SUPERFICIE] <= filtros_deseados[SUPERFICIE][MAXIMO]):
+    try:
+        if (float(propiedad[SUPERFICIE]) >= filtros_deseados[SUPERFICIE][MINIMO]) and (float(propiedad[SUPERFICIE]) <= filtros_deseados[SUPERFICIE][MAXIMO]):
+            
+            propiedad += [SUPERFICIE]
+    except:
         
-        propiedad += [SUPERFICIE]
+        propiedad = propiedad
 
     return propiedad
 
 
 def filtrar_tipo_prop(propiedad, filtros_deseados):
     
-    if propiedad[TIPO_DE_PROPIEDAD] == filtros_deseados[TIPO_DE_PROPIEDAD]:
-
-        propiedad += [TIPO_DE_PROPIEDAD]
+    try:
+        if propiedad[TIPO_DE_PROPIEDAD] == filtros_deseados[TIPO_DE_PROPIEDAD]:
+            
+            propiedad += [TIPO_DE_PROPIEDAD]
+            
+    except:
+        
+        propiedad = propiedad
 
     return propiedad
 
@@ -225,7 +245,7 @@ def aplicar_filtros(propiedades, busqueda, filtros_deseados):
                 
             if TIPO_DE_PROPIEDAD in filtros_deseados:
                 
-                propiedad = filtrar_tipo_prop(propiedad)
+                propiedad = filtrar_tipo_prop(propiedad, filtros_deseados)
 
         lista_filtros_deseados = [x for x in filtros_deseados]
 
@@ -244,9 +264,9 @@ def analizar_datos(propiedades, busqueda):
 
     print("GRACIAS POR ELEGIRNOS.")
 
-    print("HAY", contar_propiedades(propiedades), " PROPIEDADES DISPONIBLES, PUEDE VERLAS TODAS O TAMBIEN PUEDE FLITRAR SU BUSQUEDA POR:  \n1)'TIPO DE PROPIEDAD\n2)MONEDA\n3)PRECIO\n4)SUPERFICIE\n5)AMBIENTES")
+    print("HAY", contar_propiedades(propiedades), " PROPIEDADES DISPONIBLES, PUEDE VERLAS TODAS O TAMBIEN PUEDE FLITRAR SU BUSQUEDA POR:  \n1)TIPO DE PROPIEDAD\n2)PRECIO\n3)SUPERFICIE\n4)AMBIENTES")
 
-    desea_filtros = validar_ingreso(input("Desea realizar filtros en su busqueda? (Ingrese S/N").upper())
+    desea_filtros = validar_ingreso(input("Desea realizar filtros en su busqueda? (Ingrese S/N): ").upper())
 
     filtros_deseados = {}
 
@@ -258,7 +278,7 @@ def analizar_datos(propiedades, busqueda):
 
         while propiedad[NUMERO]:
 
-            print("\n" + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Ubicacion----  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: "  + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL])
+            busqueda.write(propiedad[NUMERO] + "," + propiedad[FECHA] + "," + propiedad[LATITUD] + "," + propiedad[LONGITUD] + "," + propiedad[URL] + "," + propiedad[TITULO] + "," + propiedad[TIPO_DE_PROPIEDAD] + "," + propiedad[PRECIO] + "," + propiedad[MONEDA] + "," + propiedad[SUPERFICIE] + "," + propiedad[AMBIENTES] + "\n")
 
             propiedad = leer(propiedades)
     else:
@@ -283,7 +303,7 @@ def mostrar_resultados(resultados_de_busqueda):
 
         while propiedad[NUMERO]:
             
-            lista_a_ordenar += [propiedad]
+            lista_a_ordenar += [(propiedad)]
             
             propiedad = leer(resultados_de_busqueda)
 
@@ -291,17 +311,21 @@ def mostrar_resultados(resultados_de_busqueda):
 
         if orden:
             
-            lista_a_ordenar = lista_a_ordenar.sort(key = lambda inmueble:inmueble[PRECIO])
+            lista_ordenada = sorted(lista_a_ordenar, key = lambda inmueble:inmueble[PRECIO])
             
-            for inmueble in lista_a_ordenar:
+            #print(lista_ordenada)
+            
+            for propiedad in lista_ordenada:
 
                print("\n" + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "\n" + "Ubicacion ---->  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: "  + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL] + "\n" )
         
         else:
             
-            lista_a_ordenar = lista_a_ordenar.sort(reverse = True, key = lambda inmueble:inmueble[PRECIO])
+            lista_ordenada = sorted(lista_a_ordenar, reverse = True, key = lambda inmueble:inmueble[PRECIO])
             
-            for inmueble in lista_a_ordenar:
+            #print(lista_ordenada)
+            
+            for propiedad in lista_ordenada:
 
                print("\n" + "\n" + "Titulo: " + propiedad[TITULO] + "\n" + "Tipo de propiedad: " + propiedad[TIPO_DE_PROPIEDAD]  + "\n" + "\n" + "Ubicacion ---->  Latitud: " + propiedad[LATITUD] + "  Longitud:" + propiedad[LONGITUD] + "\n" + "Moneda: " + propiedad[MONEDA] + "\n" + "Precio: " + propiedad[PRECIO] + "\n" + "Ambientes: " + propiedad[AMBIENTES] + "\n" + "Superficie: "  + propiedad[SUPERFICIE] + "\n" + "URL: " + propiedad[URL] + "\n")
     
@@ -313,7 +337,6 @@ def mostrar_resultados(resultados_de_busqueda):
             
             propiedad = leer(resultados_de_busqueda)
             
-    del(lista_a_ordenar)
 
 
 
