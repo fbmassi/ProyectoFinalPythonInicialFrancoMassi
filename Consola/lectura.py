@@ -399,7 +399,57 @@ def analizar_datos(propiedades, busqueda):
         filtros_deseados = filtros_a_aplicar(filtros_deseados)
 
         aplicar_filtros(propiedades, busqueda, filtros_deseados)
+        
 
+def determinar_precios(resultados_de_busqueda, cant_propiedades):
+    """
+    Esta funcion recibe como parametro
+    en archivo de texto con los resultados
+    de busqueda encontrados. Encuentra un
+    precio maximo, uno minimo y el promedio
+    de los precios y los devuelve en una tupla
+    con la informacion encontrada.
+    """
+    
+    propiedad = leer(resultados_de_busqueda)
+    
+    propiedad = leer(propiedades_de_busqueda)
+    
+    precio_maximo = propiedad[PRECIO]
+    
+    precio_minimo = propiedad[PRECIO]
+    
+    ambientes_p_max = propiedad[AMBIENTES]
+    
+    ambientes_p_min = propiedad[AMBIENTES]
+    
+    suma_precios = 0
+    
+    promedio_precios = 0
+
+    while propiedad[NUMERO]:
+        
+        suma_precio += propiedad[PRECIO]
+        
+        if precio_maximo < propiedad[PRECIO]:
+            
+            precio_maximo = propiedad[PRECIO]
+            
+            ambientes_p_max = propiedad[AMBIENTES]
+        
+        if precio_minimo > propiedad[PRECIO]:
+            
+            precio_minimo = propiedad[PRECIO]
+            
+            ambientes_p_min = propiedad[AMBIENTES]
+            
+        propiedad = leer(resultados_de_busqueda)
+        
+    promedio_precios = suma_precios/cant_precios
+        
+    resultados_de_busqueda.seek(PRINCIPIO)
+    
+    return (precio_maximo, precio_minimo, promedio_precios, ambientes_p_max, ambientes_p_min)
 
 
 def mostrar_resultados(resultados_de_busqueda):
@@ -411,12 +461,28 @@ def mostrar_resultados(resultados_de_busqueda):
     dependiendo de la cantidad que se filtro
     y si el usuario desea o no que los resultados
     se muestren en orden ascendente o descendente
-    respecto al precio de los mismos.
+    respecto al precio de los mismos. Tambien
+    muestra en pantalla el mayor precio del
+    resultado de busqueda, el menor y el promedio. 
     """
     
     cant_resultados = contar_propiedades(resultados_de_busqueda)
 
     print("\n\nHAY", cant_resultados, " PROPIEDADES AJUSTADAS A SUS PREFERENCIAS.")
+    
+    precio_maximo, precio_minimo, promedio_precios, ambientes_p_max, ambientes_p_min = determinar_precios(resultados_de_busqueda, cant_resultados)
+    
+    if precio_minimo != precio_maximo and cant_resultados >= 1:
+        
+        print("EL PRECIO MAXIMO ENCONTRADO EN SU BUSQUEDA ES DE ", precio_maximo, ",LA PROPIEDAD POSEE ", ambientes_p_max, " AMBIENTES.")
+        
+        print("EL PRECIO MINIMO ENCONTRADO EN SU BUSQUEDA ES DE ", precio_minimo, ", LA PROPIEDAD POSEE ", ambientes_p_min, "AMBIENTES.")
+        
+        print("EL PRECIO PROMEDIO DE LOS RESULTADOS DE BUSQUEDA ES ", promedio_precios)
+        
+    elif precio_maximo == precio_minimo or cant_resultados == 1:
+        
+        print("EL/LOS RESULTADO/S DE BUSQUEDA TIENE/N UN VALOR DE ", precio_maximo)
 
     propiedad = leer(resultados_de_busqueda)
 
