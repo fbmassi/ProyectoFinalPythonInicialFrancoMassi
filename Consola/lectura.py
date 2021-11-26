@@ -386,11 +386,15 @@ def analizar_datos(propiedades, busqueda):
     """
     Recibe como parametros el archivo
     a leer y el archivo a escribir.
-    Dirige como se graba la informacion
-    en el segundo archivo dependiendo de
+    Gestiona como se graba la informacion
+    en el archivo final dependiendo de
     si el usuario desea aplicar filtros
     de busqueda o desea ver todas las
     propiedades disponibles.
+    Tambien lleva la cuenta de las
+    propiedades en pesos y en dolares
+    en caso de que el usuario no desee
+    aplicar filtros de busqueda.
     """
 
     print("GRACIAS POR ELEGIRNOS.")
