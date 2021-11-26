@@ -321,6 +321,9 @@ def aplicar_filtros(propiedades, busqueda, filtros_deseados):
     escritura. Si la propiedad analizada
     no cumple con los requisitos, simplemente
     se descarta y se lee la siguiente.
+    Tambien lleva la cuenta de las propiedades 
+    encontradas que se encuentran tasadas en 
+    pesos y en dolares.
     """
 
     propiedad = leer(propiedades)
@@ -328,6 +331,10 @@ def aplicar_filtros(propiedades, busqueda, filtros_deseados):
     propiedad = leer(propiedades)
 
     NUMERO_DE_FILTROS = len(filtros_deseados)
+
+    contar_prop_pesos = 0
+
+    contar_prop_dolares = 0
 
     while propiedad[NUMERO]:
 
@@ -351,15 +358,28 @@ def aplicar_filtros(propiedades, busqueda, filtros_deseados):
 
         lista_filtros_deseados = [x for x in filtros_deseados]
 
-        if propiedad[11: 11 + NUMERO_DE_FILTROS] == lista_filtros_deseados:
+        if (propiedad[11: 11 + NUMERO_DE_FILTROS] == lista_filtros_deseados) and (propiedad[MONEDA] == "USD"):
 
             busqueda.write(propiedad[NUMERO] + "," + propiedad[FECHA] + "," + propiedad[LATITUD] + "," + propiedad[LONGITUD] + "," + propiedad[URL] + "," + propiedad[TITULO] + "," + propiedad[TIPO_DE_PROPIEDAD] + "," + propiedad[PRECIO] + "," + propiedad[MONEDA] + "," + propiedad[SUPERFICIE] + "," + propiedad[AMBIENTES] + "\n")
+
+            contar_prop_dolares += 1
+
+            propiedad = leer(propiedades)
+
+        if (propiedad[11: 11 + NUMERO_DE_FILTROS] == lista_filtros_deseados) and (propiedad[MONEDA] == "ARS"):
+
+            busqueda.write(propiedad[NUMERO] + "," + propiedad[FECHA] + "," + propiedad[LATITUD] + "," + propiedad[LONGITUD] + "," + propiedad[URL] + "," + propiedad[TITULO] + "," + propiedad[TIPO_DE_PROPIEDAD] + "," + propiedad[PRECIO] + "," + propiedad[MONEDA] + "," + propiedad[SUPERFICIE] + "," + propiedad[AMBIENTES] + "\n")
+
+            contar_prop_pesos += 1
 
             propiedad = leer(propiedades)
 
         else:
             propiedad = leer(propiedades)
 
+    print("FUERON ENCONTRADAS ", contar_prop_pesos, "TASADAS EN PESOS Y ", contar_prop_dolares, "TASADAS EN DOLARES.")
+
+    
 
 
 def analizar_datos(propiedades, busqueda):
@@ -380,6 +400,10 @@ def analizar_datos(propiedades, busqueda):
     desea_filtros = validar_ingreso(input("Desea realizar filtros en su busqueda? (Ingrese S/N): ").upper())
 
     filtros_deseados = {}
+
+    contar_prop_pesos = 0
+
+    contar_prop_dolares = 0
     
     busqueda.write("numero" + "," + "fecha" + "," + "latitud" + "," + "longitud" + "," + "url" + "," + "titulo" + "," + "tipo de propiedad" + "," + "precio" + "," + "moneda" + "," + "superficie" + "," + "ambientes" + "\n")
 
@@ -391,9 +415,28 @@ def analizar_datos(propiedades, busqueda):
 
         while propiedad[NUMERO]:
 
-            busqueda.write(propiedad[NUMERO] + "," + propiedad[FECHA] + "," + propiedad[LATITUD] + "," + propiedad[LONGITUD] + "," + propiedad[URL] + "," + propiedad[TITULO] + "," + propiedad[TIPO_DE_PROPIEDAD] + "," + propiedad[PRECIO] + "," + propiedad[MONEDA] + "," + propiedad[SUPERFICIE] + "," + propiedad[AMBIENTES] + "\n")
+            if propiedad[MONEDA] == "USD":
+                
+                busqueda.write(propiedad[NUMERO] + "," + propiedad[FECHA] + "," + propiedad[LATITUD] + "," + propiedad[LONGITUD] + "," + propiedad[URL] + "," + propiedad[TITULO] + "," + propiedad[TIPO_DE_PROPIEDAD] + "," + propiedad[PRECIO] + "," + propiedad[MONEDA] + "," + propiedad[SUPERFICIE] + "," + propiedad[AMBIENTES] + "\n")
 
-            propiedad = leer(propiedades)
+                contar_prop_dolares += 1
+            
+                propiedad = leer(propiedades)
+
+            elif propiedad[MONEDA] == "ARS":
+
+                busqueda.write(propiedad[NUMERO] + "," + propiedad[FECHA] + "," + propiedad[LATITUD] + "," + propiedad[LONGITUD] + "," + propiedad[URL] + "," + propiedad[TITULO] + "," + propiedad[TIPO_DE_PROPIEDAD] + "," + propiedad[PRECIO] + "," + propiedad[MONEDA] + "," + propiedad[SUPERFICIE] + "," + propiedad[AMBIENTES] + "\n")
+
+                contar_prop_pesos += 1
+            
+                propiedad = leer(propiedades)
+
+            else:
+
+                propiedad = leer(propiedades)
+        
+        print("FUERON ENCONTRADAS ", contar_prop_pesos, "TASADAS EN PESOS Y ", contar_prop_dolares, "TASADAS EN DOLARES.")
+
     else:
 
         filtros_deseados = filtros_a_aplicar(filtros_deseados)
@@ -401,7 +444,7 @@ def analizar_datos(propiedades, busqueda):
         aplicar_filtros(propiedades, busqueda, filtros_deseados)
         
 
-def determinar_precios(resultados_de_busqueda, cant_propiedades):
+def determinar_precios(resultados_de_busqueda, cant_resultados):
     """
     Esta funcion recibe como parametro
     en archivo de texto con los resultados
@@ -413,7 +456,7 @@ def determinar_precios(resultados_de_busqueda, cant_propiedades):
     
     propiedad = leer(resultados_de_busqueda)
     
-    propiedad = leer(propiedades_de_busqueda)
+    propiedad = leer(resultados_de_busqueda)
     
     precio_maximo = propiedad[PRECIO]
     
@@ -429,7 +472,7 @@ def determinar_precios(resultados_de_busqueda, cant_propiedades):
 
     while propiedad[NUMERO]:
         
-        suma_precio += propiedad[PRECIO]
+        suma_precios += propiedad[PRECIO]
         
         if precio_maximo < propiedad[PRECIO]:
             
@@ -445,7 +488,7 @@ def determinar_precios(resultados_de_busqueda, cant_propiedades):
             
         propiedad = leer(resultados_de_busqueda)
         
-    promedio_precios = suma_precios/cant_precios
+    promedio_precios = suma_precios/cant_resultados
         
     resultados_de_busqueda.seek(PRINCIPIO)
     
@@ -472,7 +515,7 @@ def mostrar_resultados(resultados_de_busqueda):
     
     precio_maximo, precio_minimo, promedio_precios, ambientes_p_max, ambientes_p_min = determinar_precios(resultados_de_busqueda, cant_resultados)
     
-    if precio_minimo != precio_maximo and cant_resultados >= 1:
+    if (precio_minimo != precio_maximo) and (cant_resultados >= 1):
         
         print("EL PRECIO MAXIMO ENCONTRADO EN SU BUSQUEDA ES DE ", precio_maximo, ",LA PROPIEDAD POSEE ", ambientes_p_max, " AMBIENTES.")
         
@@ -480,7 +523,7 @@ def mostrar_resultados(resultados_de_busqueda):
         
         print("EL PRECIO PROMEDIO DE LOS RESULTADOS DE BUSQUEDA ES ", promedio_precios)
         
-    elif precio_maximo == precio_minimo or cant_resultados == 1:
+    elif (precio_maximo == precio_minimo) or (cant_resultados == 1):
         
         print("EL/LOS RESULTADO/S DE BUSQUEDA TIENE/N UN VALOR DE ", precio_maximo)
 

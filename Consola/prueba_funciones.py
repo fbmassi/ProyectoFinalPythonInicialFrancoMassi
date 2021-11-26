@@ -1,5 +1,5 @@
 from lectura import NUMERO, AMBIENTES, SUPERFICIE, MONEDA, PRECIO, TIPO_DE_PROPIEDAD
-from other_functions import validar_numero
+from otras_funciones import validar_numero
 
 #PRUEBA NUMERO 1
 
