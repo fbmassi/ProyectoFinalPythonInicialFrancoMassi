@@ -472,7 +472,7 @@ def determinar_precios(resultados_de_busqueda, cant_resultados):
 
     while propiedad[NUMERO]:
         
-        suma_precios += propiedad[PRECIO]
+        suma_precios += float(propiedad[PRECIO])
         
         if precio_maximo < propiedad[PRECIO]:
             
