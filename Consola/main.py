@@ -1,6 +1,6 @@
 # PROYECTO FINAL PYTHON INICIAL 
 # AUTOR: FRANCO BALTASAR MASSI
-# BUSCADOR DE ALQUILERES
+# BUSCADOR DE ALQUILER
 
 from lectura import contar_propiedades, analizar_datos, mostrar_resultados
 from otras_funciones import validar_ingreso
