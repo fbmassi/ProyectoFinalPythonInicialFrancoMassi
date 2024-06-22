@@ -3,6 +3,7 @@
 ## Que hace el programa?
 El programa analiza las propiedades disponibles en el archivo 'propiedades_CABA.csv'. 
 Tambien puede realizar busquedas en cualquier otra ciudad del pais si descarga un archivo a travez del link [http://inove.pythonanywhere.com/alquileres/buscar?ubicacion=Mendoza] y reemplazar en el codigo del programa el archivo 'propiedades_CABA.csv' por el que descargo a travez del link y analizar las propiedades en otras ciudades. La librería genera un reporte de alquileres de MERCADO LIBRE en una determinada ubicacion. Para poder descargar el archivo "csv" de la zona o ciudad deseada debe editar la ubicación del link y colocar en ubicación donde desean que la librería realice la búsqueda y genere el "csv".
+
 ![](Imagenes/MercadoLibre.jpg)
 ## Como funciona el programa?
 1) Debe descargar el repositorio desde esta pagina.
